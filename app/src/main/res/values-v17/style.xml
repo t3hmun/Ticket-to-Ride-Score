@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <style name="rel_start_content" parent="rel_start_content_base">
+                <item name="android:layout_alignParentStart">true</item>
+        </style>
+</resources>

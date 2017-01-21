@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Ticket To Ride Score</string>
+    <string name="choose_game_edition">Choose game edition:</string>
+    <string name="ttr_usa">Ticket to Ride USA (original)</string>
+    <string name="ttr_euro">Ticket to Ride Europe</string>
+    <string name="choose_player_colours">Choose player colors:</string>
+    <string name="red">Red</string>
+    <string name="yellow">Yellow</string>
+    <string name="green">Green</string>
+    <string name="blue">Blue</string>
+    <string name="black">Black</string>
+    <string name="start_new_game">Start new game</string>
 </resources>

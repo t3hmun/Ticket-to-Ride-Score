@@ -11,7 +11,70 @@
     tools:context="com.t3hmun.tickettoridescore.ConfigActivity">
 
     <TextView
+        android:id="@+id/chooseGameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="@string/choose_game_edition" />
+
+    <RadioButton
+        style="@style/rel_start_content"
+        android:id="@+id/usaOption"
+        android:layout_below="@+id/chooseGameLabel"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/ttr_usa"
+        android:checked="true" />
+
+    <RadioButton
+        style="@style/rel_start_content"
+        android:text="@string/ttr_euro"
+        android:id="@+id/europeOption"
+        android:layout_below="@+id/usaOption"/>
+
+    <TextView
+        android:text="@string/choose_player_colours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/europeOption"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/playersLabel" />
+
+    <CheckBox
+        style="@style/rel_start_content"
+        android:text="@string/red"
+        android:id="@+id/redCheck"
+        android:layout_below="@+id/playersLabel"
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
+
+    <CheckBox
+        style="@style/rel_start_content"
+        android:text="@string/yellow"
+        android:id="@+id/yellowCheck"
+        android:layout_below="@+id/redCheck"/>
+
+    <CheckBox
+        style="@style/rel_start_content"
+        android:text="@string/green"
+        android:id="@+id/greenCheck"
+        android:layout_below="@+id/yellowCheck"/>
+
+    <CheckBox
+        style="@style/rel_start_content"
+        android:text="@string/blue"
+        android:id="@+id/blueCheck"
+        android:layout_below="@+id/greenCheck"/>
+
+    <CheckBox
+        style="@style/rel_start_content"
+        android:text="@string/black"
+        android:id="@+id/blackCheck"
+        android:layout_below="@+id/blueCheck"/>
+
+    <Button
+        style="@style/rel_start_content"
+        android:id="@+id/start_button"
+        android:layout_below="@+id/blackCheck"
+        android:text="@string/start_new_game"/>
+
 </RelativeLayout>
