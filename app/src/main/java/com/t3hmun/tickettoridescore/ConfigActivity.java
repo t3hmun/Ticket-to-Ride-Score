@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class ConfigActivity extends AppCompatActivity {
 
-    private final String BUNDLE_CONF = "conf";
+    static final String BUNDLE_CONF = "conf";
 
     ConfigData data;
     private HashMap<GameEdition, RadioButton> opts;
@@ -54,12 +54,14 @@ public class ConfigActivity extends AppCompatActivity {
             data = new ConfigData();
         }
 
+        // This fires on every radio button for each click, which is why the group should be used.
+        // However for a small list it doesn't really matter. Mildly inefficient.
         for (HashMap.Entry<GameEdition, RadioButton> entry : opts.entrySet()) {
             final GameEdition edition = entry.getKey();
             entry.getValue().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    data.setGameEdition(edition);
+                    if(isChecked) data.setGameEdition(edition);
                 }
             });
         }
@@ -79,7 +81,7 @@ public class ConfigActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // `this` is currently an OnClickListener object. The wonders of Java.
                 Intent intent = new Intent(ConfigActivity.this, MainActivity.class);
-                intent.putExtra("data", data);
+                intent.putExtra(BUNDLE_CONF, data);
                 startActivity(intent);
             }
         });
