@@ -8,7 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="rel_start_content" parent="rel_start_content_base"/>
+    <style name="rel_start_content" parent="rel_start_content_base" />
+
     <style name="rel_start_content_base">
         <item name="android:minHeight">@dimen/min_interactive_dim</item>
         <item name="android:minWidth">@dimen/min_interactive_dim</item>
@@ -17,5 +18,14 @@
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:paddingLeft">@dimen/activity_vertical_margin</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
