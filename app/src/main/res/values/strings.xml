@@ -14,4 +14,12 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="undefined">Undefined</string>
+    <string name="routes">Routes</string>
+    <string name="tickets">Tickets</string>
+    <string name="end_game">End Game</string>
+    <string name="ticket_none">No ticket scores added.</string>
+    <string name="route_none">No routes scores added.</string>
+    <string name="add_route_score">Add route score</string>
+    <string name="add_ticket_score">Add ticket score</string>
+    <string name="add_remaining_trains">Add Remaining Trains</string>
 </resources>
