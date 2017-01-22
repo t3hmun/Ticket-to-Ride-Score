@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager viewPager;
     private HashMap<Colours, Integer> colorMapping;
+    private HashMap<Colours, TextView> scores;
+    private Colours currentPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        scores = new HashMap<>(10);
+
         for (int i = 0; i < colours.size(); i++)
         {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
@@ -89,21 +93,40 @@ public class MainActivity extends AppCompatActivity {
             Colours tabColour = colours.get(i);
             label.setText(tabColour.toString());
             score.setText("0");
+            scores.put(tabColour, score);
             view.setBackgroundColor(colorMapping.get(tabColour));
+            // This is required to make the custom view fill the tab properly.
             view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             assert tab != null;
             tab.setCustomView(view);
+            tab.setTag(tabColour);
         }
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                currentPlayer = (Colours) tab.getTag();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "CurrentPlayer = " + currentPlayer.toString(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
-
     }
 
 
