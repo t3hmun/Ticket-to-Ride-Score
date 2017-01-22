@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager viewPager;
-    private ConfigData config;
+    private HashMap<Colours, Integer> colorMapping;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +47,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
-        config = intent.getParcelableExtra(ConfigActivity.BUNDLE_CONF);
+        ConfigData config = intent.getParcelableExtra(ConfigActivity.BUNDLE_CONF);
+
+        colorMapping = new HashMap<>(10);
+        colorMapping.put(Colours.RED, ContextCompat.getColor(this, R.color.player_red));
+        colorMapping.put(Colours.YELLOW, ContextCompat.getColor(this, R.color.player_yellow));
+        colorMapping.put(Colours.GREEN, ContextCompat.getColor(this, R.color.player_green));
+        colorMapping.put(Colours.BLUE, ContextCompat.getColor(this, R.color.player_blue));
+        colorMapping.put(Colours.BLACK, ContextCompat.getColor(this, R.color.player_black));
+
+        // Coming from C# the inability to easily convert to int[] is baffling.
+        // C# generics and LINQ really change the way one thinks about this stuff.
+        List<Colours> colours = new ArrayList<>();
+        for (HashMap.Entry<Colours, Boolean> entry : config.getPlayers().entrySet()) {
+            if (!entry.getValue()) continue;
+            colours.add(entry.getKey());
+        }
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), colours);
 
         // Set up the ViewPager with the sections adapter.
         viewPager = (ViewPager) findViewById(R.id.container);
@@ -133,11 +152,16 @@ public class MainActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        private List<Colours> colours;
+
+        SectionsPagerAdapter(FragmentManager fm, List<Colours> colours) {
             super(fm);
+            this.colours = colours;
         }
 
-        /** Called to create a fragment, not called after creation - cached inside.
+        /**
+         * Called to create a fragment, not called after creation - cached inside.
+         *
          * @param position Tab position.
          * @return Fragment displayed in tab.
          */
@@ -148,21 +172,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return colours.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
+            return colours.get(position).toString();
         }
     }
 }
