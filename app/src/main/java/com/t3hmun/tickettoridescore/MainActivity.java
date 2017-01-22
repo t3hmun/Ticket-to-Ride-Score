@@ -17,6 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -76,6 +79,21 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        for (int i = 0; i < colours.size(); i++)
+        {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            View view = LayoutInflater.from(this).inflate(R.layout.coloured_tab, null);
+            assert view != null;
+            TextView label = (TextView)view.findViewById(R.id.label);
+            TextView score = (TextView)view.findViewById(R.id.score);
+            Colours tabColour = colours.get(i);
+            label.setText(tabColour.toString());
+            score.setText("0");
+            view.setBackgroundColor(colorMapping.get(tabColour));
+            view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            assert tab != null;
+            tab.setCustomView(view);
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
