@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.t3hmun.tickettoridescore.MainActivity$PlaceholderFragment">
+    tools:context="com.t3hmun.tickettoridescore.MainActivity$PlayerScoreFragment">
 
     <TextView
         android:id="@+id/section_label"

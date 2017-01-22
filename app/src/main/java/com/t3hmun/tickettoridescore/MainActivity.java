@@ -1,5 +1,6 @@
 package com.t3hmun.tickettoridescore;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,8 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -83,13 +82,12 @@ public class MainActivity extends AppCompatActivity {
 
         scores = new HashMap<>(10);
 
-        for (int i = 0; i < colours.size(); i++)
-        {
+        for (int i = 0; i < colours.size(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
-            View view = LayoutInflater.from(this).inflate(R.layout.coloured_tab, null);
+            @SuppressLint("InflateParams") View view = LayoutInflater.from(this).inflate(R.layout.coloured_tab, null);
             assert view != null;
-            TextView label = (TextView)view.findViewById(R.id.label);
-            TextView score = (TextView)view.findViewById(R.id.score);
+            TextView label = (TextView) view.findViewById(R.id.label);
+            TextView score = (TextView) view.findViewById(R.id.score);
             Colours tabColour = colours.get(i);
             label.setText(tabColour.toString());
             score.setText("0");
@@ -155,24 +153,24 @@ public class MainActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlayerScoreFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+        private static final String ARG_COLOUR_ORDINAL = "section_number";
 
-        public PlaceholderFragment() {
+        public PlayerScoreFragment() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static PlayerScoreFragment newInstance(Colours playerColour) {
+            PlayerScoreFragment fragment = new PlayerScoreFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putInt(ARG_COLOUR_ORDINAL, playerColour.ordinal());
             fragment.setArguments(args);
             return fragment;
         }
@@ -181,8 +179,9 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            //noinspection unused
+            Colours playerColour = Colours.values()[getArguments().getInt(ARG_COLOUR_ORDINAL)];
+            // TODO: Use playerColour to make some things in this fragment coloured.
             return rootView;
         }
     }
@@ -208,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public Fragment getItem(int position) {
-            return PlaceholderFragment.newInstance(position + 1);
+            return PlayerScoreFragment.newInstance(colours.get(position));
         }
 
         @Override
