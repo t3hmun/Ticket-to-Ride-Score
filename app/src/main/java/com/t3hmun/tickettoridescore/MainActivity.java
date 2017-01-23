@@ -46,15 +46,6 @@ public class MainActivity extends AppCompatActivity {
         chosenPlayerColours = loadChosenPlayerColours();
         TabLayout tabLayout = initToolbarTabsAndPager();
         scoreTextViews = initCustomTabs(chosenPlayerColours, tabLayout);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "CurrentPlayer = " + currentPlayer.toString(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @NonNull
@@ -63,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        
+
         ViewPager viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(sectionsPagerAdapter);
 
