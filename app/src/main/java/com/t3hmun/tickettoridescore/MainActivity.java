@@ -3,6 +3,7 @@ package com.t3hmun.tickettoridescore;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -17,34 +18,21 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter sectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager viewPager;
-    private HashMap<Colours, Integer> colorMapping;
-    private HashMap<Colours, TextView> scores;
+    private Map<Colours, Integer> colorMapping;
+    private Map<Colours, TextView> scoreTextViews;
     private Colours currentPlayer;
     private ConfigData config;
+    private List<Colours> chosenPlayerColours;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,52 +42,33 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         config = intent.getParcelableExtra(ConfigActivity.BUNDLE_CONF);
 
-        colorMapping = new HashMap<>(10);
-        colorMapping.put(Colours.RED, ContextCompat.getColor(this, R.color.player_red));
-        colorMapping.put(Colours.YELLOW, ContextCompat.getColor(this, R.color.player_yellow));
-        colorMapping.put(Colours.GREEN, ContextCompat.getColor(this, R.color.player_green));
-        colorMapping.put(Colours.BLUE, ContextCompat.getColor(this, R.color.player_blue));
-        colorMapping.put(Colours.BLACK, ContextCompat.getColor(this, R.color.player_black));
+        colorMapping = initColourMapping();
+        chosenPlayerColours = loadChosenPlayerColours();
+        TabLayout tabLayout = initToolbarTabsAndPager();
+        scoreTextViews = initCustomTabs(chosenPlayerColours, tabLayout);
 
-        // Coming from C# the inability to easily convert to int[] is baffling.
-        // C# generics and LINQ really change the way one thinks about this stuff.
-        List<Colours> colours = new ArrayList<>();
-        for (HashMap.Entry<Colours, Boolean> entry : config.getPlayers().entrySet()) {
-            if (!entry.getValue()) continue;
-            colours.add(entry.getKey());
-        }
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "CurrentPlayer = " + currentPlayer.toString(), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
 
-
+    @NonNull
+    private TabLayout initToolbarTabsAndPager() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), colours);
 
-        // Set up the ViewPager with the sections adapter.
-        viewPager = (ViewPager) findViewById(R.id.container);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        
+        ViewPager viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(sectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
-        scores = new HashMap<>(10);
-
-        for (int i = 0; i < colours.size(); i++) {
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-            @SuppressLint("InflateParams") View view = LayoutInflater.from(this).inflate(R.layout.coloured_tab, null);
-            assert view != null;
-            TextView label = (TextView) view.findViewById(R.id.label);
-            TextView score = (TextView) view.findViewById(R.id.score);
-            Colours tabColour = colours.get(i);
-            label.setText(tabColour.toString());
-            score.setText("0");
-            scores.put(tabColour, score);
-            view.setBackgroundColor(colorMapping.get(tabColour));
-            // This is required to make the custom view fill the tab properly.
-            view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-            assert tab != null;
-            tab.setCustomView(view);
-            tab.setTag(tabColour);
-        }
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -117,15 +86,51 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        return tabLayout;
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "CurrentPlayer = " + currentPlayer.toString(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    @NonNull
+    private List<Colours> loadChosenPlayerColours() {
+        // Coming from C# the inability to easily convert to int[] is baffling.
+        // C# generics and LINQ really change the way one thinks about this stuff.
+        List<Colours> chosenPlayerColours = new ArrayList<>();
+        for (HashMap.Entry<Colours, Boolean> entry : config.getPlayers().entrySet()) {
+            if (!entry.getValue()) continue;
+            chosenPlayerColours.add(entry.getKey());
+        }
+        return chosenPlayerColours;
+    }
+
+    private Map<Colours, Integer> initColourMapping() {
+        Map<Colours, Integer> colorMap = new HashMap<>(10);
+        colorMap.put(Colours.RED, ContextCompat.getColor(this, R.color.player_red));
+        colorMap.put(Colours.YELLOW, ContextCompat.getColor(this, R.color.player_yellow));
+        colorMap.put(Colours.GREEN, ContextCompat.getColor(this, R.color.player_green));
+        colorMap.put(Colours.BLUE, ContextCompat.getColor(this, R.color.player_blue));
+        colorMap.put(Colours.BLACK, ContextCompat.getColor(this, R.color.player_black));
+        return colorMap;
+    }
+
+    private Map<Colours, TextView> initCustomTabs(List<Colours> colours, TabLayout tabLayout) {
+        Map<Colours, TextView> scoreViews = new HashMap<>(10);
+        for (int i = 0; i < colours.size(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            @SuppressLint("InflateParams") View view = LayoutInflater.from(this).inflate(R.layout.coloured_tab, null);
+            assert view != null;
+            TextView label = (TextView) view.findViewById(R.id.label);
+            TextView score = (TextView) view.findViewById(R.id.score);
+            Colours tabColour = colours.get(i);
+            label.setText(tabColour.toString());
+            score.setText("0");
+            scoreViews.put(tabColour, score);
+            view.setBackgroundColor(colorMapping.get(tabColour));
+            // This is required to make the custom view fill the tab properly.
+            view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            assert tab != null;
+            tab.setCustomView(view);
+            tab.setTag(tabColour);
+        }
+        return scoreViews;
     }
 
 
@@ -152,54 +157,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlayerScoreFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_COLOUR_ORDINAL = "section_number";
-
-        public PlayerScoreFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlayerScoreFragment newInstance(Colours playerColour) {
-            PlayerScoreFragment fragment = new PlayerScoreFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_COLOUR_ORDINAL, playerColour.ordinal());
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            //noinspection unused
-            Colours playerColour = Colours.values()[getArguments().getInt(ARG_COLOUR_ORDINAL)];
-            // TODO: Use playerColour to make some things in this fragment coloured.
-
-            
-            return rootView;
-        }
-    }
-
-    /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        private List<Colours> colours;
 
-        SectionsPagerAdapter(FragmentManager fm, List<Colours> colours) {
+        private List<Colours> playerColours;
+
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
-            this.colours = colours;
+            // Adding this field makes the code neater.
+            playerColours = MainActivity.this.chosenPlayerColours;
+
         }
 
         /**
@@ -210,17 +180,17 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public Fragment getItem(int position) {
-            return PlayerScoreFragment.newInstance(colours.get(position));
+            return PlayerScoreFragment.newInstance(playerColours.get(position));
         }
 
         @Override
         public int getCount() {
-            return colours.size();
+            return playerColours.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return colours.get(position).toString();
+            return playerColours.get(position).toString();
         }
     }
 }
