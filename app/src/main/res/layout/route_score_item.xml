@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+
+    tools:showIn="@layout/route_score_item_preview">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="3"
+            android:textAlignment="center" />
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text=" x "
+            android:textAlignment="center" />
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/carriage" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView6"
+        style="@style/Base.TextAppearance.AppCompat.Small"
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="(4 points)"
+        android:textAlignment="center" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/num_border">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="2"
+            android:inputType="number"
+            android:text="10"
+            android:textAlignment="center" />
+
+
+        <TextView
+            android:id="@+id/textView7"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="routes"
+            android:textAlignment="center" />
+
+
+        <Button
+            android:id="@+id/button"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="@dimen/min_interactive_dim"
+            android:layout_height="@dimen/min_interactive_dim"
+            android:layout_gravity="center"
+            android:text="-" />
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="@dimen/min_interactive_dim"
+            android:layout_height="@dimen/min_interactive_dim"
+            android:layout_gravity="center"
+            android:text="+" />
+    </LinearLayout>
+</merge>
