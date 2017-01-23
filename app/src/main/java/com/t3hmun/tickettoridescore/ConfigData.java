@@ -2,8 +2,11 @@ package com.t3hmun.tickettoridescore;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -79,5 +82,32 @@ class ConfigData implements Parcelable {
 
     void setGameEdition(GameEdition gameEdition) {
         this.gameEdition = gameEdition;
+    }
+
+
+    /**
+     * Gets the trains to points mapping for the selected game edition.
+     *
+     * @return Length to points mapping.
+     */
+    SparseIntArray getRouteScores() {
+        int[] lengths;
+        int[] points;
+        switch (gameEdition) {
+            default:
+            case USA:
+                lengths = new int[]{1, 2, 3, 4, 5, 6};
+                points = new int[]{1, 2, 4, 7, 10, 15};
+                break;
+            case EURO:
+                lengths = new int[]{1, 2, 3, 4, 6, 8};
+                points = new int[]{1, 2, 4, 7, 15, 21};
+        }
+        SparseIntArray map = new SparseIntArray(lengths.length);
+        for (int i = 0; i < lengths.length; i++) {
+            map.append(lengths[i], points[i]);
+        }
+
+        return map;
     }
 }

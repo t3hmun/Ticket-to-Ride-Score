@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private HashMap<Colours, Integer> colorMapping;
     private HashMap<Colours, TextView> scores;
     private Colours currentPlayer;
+    private ConfigData config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
-        ConfigData config = intent.getParcelableExtra(ConfigActivity.BUNDLE_CONF);
+        config = intent.getParcelableExtra(ConfigActivity.BUNDLE_CONF);
 
         colorMapping = new HashMap<>(10);
         colorMapping.put(Colours.RED, ContextCompat.getColor(this, R.color.player_red));
@@ -182,6 +183,8 @@ public class MainActivity extends AppCompatActivity {
             //noinspection unused
             Colours playerColour = Colours.values()[getArguments().getInt(ARG_COLOUR_ORDINAL)];
             // TODO: Use playerColour to make some things in this fragment coloured.
+
+            
             return rootView;
         }
     }

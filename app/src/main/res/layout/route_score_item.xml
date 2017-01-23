@@ -14,25 +14,24 @@
         android:layout_gravity="center">
 
         <TextView
-            android:id="@+id/textView3"
-            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:id="@+id/num_of_cars"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="3"
+            android:text="@string/cars_num_preview"
             android:textAlignment="center" />
 
         <TextView
-            style="@style/Base.TextAppearance.AppCompat.Medium"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text=" x "
+            android:text="@string/times"
             android:textAlignment="center" />
 
 
         <ImageView
-            android:id="@+id/imageView"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -40,13 +39,13 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView6"
-        style="@style/Base.TextAppearance.AppCompat.Small"
+        android:id="@+id/points"
+        style="@style/TextAppearance.AppCompat.Small"
         android:layout_width="0px"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:text="(4 points)"
+        android:text="@string/points_preview"
         android:textAlignment="center" />
 
 
@@ -57,40 +56,40 @@
         android:background="@drawable/num_border">
 
         <EditText
-            android:id="@+id/editText"
+            style="med"
+            android:id="@+id/route_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="2"
             android:inputType="number"
-            android:text="10"
+            android:text="@string/preview_num"
             android:textAlignment="center" />
 
 
         <TextView
-            android:id="@+id/textView7"
-            style="@style/Base.TextAppearance.AppCompat.Medium"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="routes"
+            android:text="@string/routes_lower"
             android:textAlignment="center" />
 
 
         <Button
-            android:id="@+id/button"
-            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:id="@+id/minus_button"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="@dimen/min_interactive_dim"
             android:layout_height="@dimen/min_interactive_dim"
             android:layout_gravity="center"
-            android:text="-" />
+            android:text="@string/minus" />
 
         <Button
-            android:id="@+id/button2"
-            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:id="@+id/plus_button"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="@dimen/min_interactive_dim"
             android:layout_height="@dimen/min_interactive_dim"
             android:layout_gravity="center"
-            android:text="+" />
+            android:text="@string/plus" />
     </LinearLayout>
 </merge>
