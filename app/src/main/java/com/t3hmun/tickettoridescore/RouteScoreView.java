@@ -28,7 +28,7 @@ public class RouteScoreView extends LinearLayout {
     }
 
     void initNumbers(int carriages, int points) {
-        carView.setText(carriages);
+        carView.setText(String.valueOf(carriages));
         pointsView.setText("(" + points + " points)");
     }
 }

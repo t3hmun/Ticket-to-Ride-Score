@@ -163,13 +163,14 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Called to create a fragment, not called after creation - cached inside.
+         * Not called on screen rotation either because the FragmentManager does things.
          *
          * @param position Tab position.
          * @return Fragment displayed in tab.
          */
         @Override
         public Fragment getItem(int position) {
-            return PlayerScoreFragment.newInstance(playerColours.get(position));
+            return PlayerScoreFragment.newInstance(playerColours.get(position), config);
         }
 
         @Override

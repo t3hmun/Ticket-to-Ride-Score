@@ -3,52 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.t3hmun.tickettoridescore.PlayerScoreFragment">
 
     <LinearLayout
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:id="@+id/root_pane"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-<TextView
-    android:id="@+id/test_text"
-    android:text="Salutations"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
-        <LinearLayout
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/routes" />
+
+        <LinearLayout
+            android:id="@+id/route_pane"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-                <TextView
-                    style="@style/Base.TextAppearance.AppCompat.Large"
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:text="@string/routes" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.2" />
-
-                <Button
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/add_route_score" />
-            </LinearLayout>
+            android:paddingBottom="@dimen/activity_vertical_margin">
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Medium"
@@ -57,37 +37,26 @@
                 android:text="@string/route_none" />
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Large"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/tickets" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_ticket_score" />
+
+        <LinearLayout
+            android:id="@+id/ticket_pane"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-                <TextView
-                    style="@style/Base.TextAppearance.AppCompat.Large"
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:text="@string/tickets" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.2" />
-
-                <Button
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/add_ticket_score" />
-            </LinearLayout>
+            android:paddingBottom="@dimen/activity_vertical_margin">
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Medium"
@@ -99,9 +68,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin">
+            android:paddingBottom="@dimen/activity_vertical_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,13 +90,12 @@
                     android:layout_height="0dp"
                     android:layout_weight="1.2" />
 
-
             </LinearLayout>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_remaining_trains"/>
+                android:text="@string/add_remaining_trains" />
         </LinearLayout>
 
 

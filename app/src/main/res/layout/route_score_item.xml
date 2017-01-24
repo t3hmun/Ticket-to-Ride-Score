@@ -32,7 +32,7 @@
 
 
         <ImageView
-            android:layout_width="80dp"
+            android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:srcCompat="@drawable/carriage" />
@@ -52,19 +52,18 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/num_border">
+        android:layout_gravity="center">
 
-        <EditText
-            style="med"
+        <TextView
             android:id="@+id/route_edit"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="2"
-            android:inputType="number"
             android:text="@string/preview_num"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
 
 
         <TextView

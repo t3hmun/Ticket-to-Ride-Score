@@ -2,17 +2,27 @@ package com.t3hmun.tickettoridescore;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.SparseArray;
 import android.util.SparseIntArray;
 
 import java.util.HashMap;
-import java.util.Map;
 
 
 /**
  * Data for ConfigActivity state and passing result to main activity.
  */
 class ConfigData implements Parcelable {
+
+    public static final Creator<ConfigData> CREATOR = new Creator<ConfigData>() {
+        @Override
+        public ConfigData createFromParcel(Parcel in) {
+            return new ConfigData(in);
+        }
+
+        @Override
+        public ConfigData[] newArray(int size) {
+            return new ConfigData[size];
+        }
+    };
 
     private HashMap<Colours, Boolean> players = new HashMap<>(10);
     private GameEdition gameEdition;
@@ -27,18 +37,6 @@ class ConfigData implements Parcelable {
             getPlayers().put(player, isSet);
         }
     }
-
-    public static final Creator<ConfigData> CREATOR = new Creator<ConfigData>() {
-        @Override
-        public ConfigData createFromParcel(Parcel in) {
-            return new ConfigData(in);
-        }
-
-        @Override
-        public ConfigData[] newArray(int size) {
-            return new ConfigData[size];
-        }
-    };
 
 
     /**
@@ -70,10 +68,6 @@ class ConfigData implements Parcelable {
 
     HashMap<Colours, Boolean> getPlayers() {
         return players;
-    }
-
-    void setPlayers(HashMap<Colours, Boolean> players) {
-        this.players = players;
     }
 
     GameEdition getGameEdition() {
