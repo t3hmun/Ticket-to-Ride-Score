@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="min_interactive_dim">48dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="item_padding">4dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="stepper_border">4dp</dimen>
 </resources>

@@ -1,6 +1,7 @@
 package com.t3hmun.tickettoridescore;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -33,6 +34,9 @@ public class RouteScoreView extends LinearLayout {
         quantity = (TextView) view.findViewById(R.id.route_edit);
         Button plus = (Button) view.findViewById(R.id.plus_button);
         Button minus = (Button) view.findViewById(R.id.minus_button);
+        int padding = getPixelDimen(R.dimen.item_padding);
+
+        view.setPadding(0, padding, 0, padding);
 
         plus.setOnClickListener(new OnClickListener() {
             @Override
@@ -57,14 +61,14 @@ public class RouteScoreView extends LinearLayout {
 
     /**
      * @param carriages The length of the train represented by this route.
-     * @param points The number of points awarded by this route.
+     * @param points    The number of points awarded by this route.
      * @param colourNum The number of the colour of this player.
      */
     void configure(int carriages, int points, int colourNum) {
         carView.setText(String.valueOf(carriages));
         pointsView.setText("(" + points + " points)");
         GradientDrawable border = (GradientDrawable) numStepperPane.getBackground();
-        border.setStroke(2, colourNum);
+        border.setStroke(getPixelDimen(R.dimen.stepper_border), colourNum);
         numStepperPane.invalidate();
     }
 
@@ -79,5 +83,10 @@ public class RouteScoreView extends LinearLayout {
 
     interface ScoreChangeListener {
         void onChange(boolean increment);
+    }
+
+    private int getPixelDimen(int resId) {
+        Resources resources = getResources();
+        return (int) (resources.getDimension(resId) / resources.getDisplayMetrics().density);
     }
 }

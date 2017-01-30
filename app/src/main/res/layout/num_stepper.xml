@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:paddingRight="4dp"
+    android:paddingLeft="4dp"
+    android:background="@drawable/border"
+    android:id="@+id/num_stepper_pane">
+
+    <TextView
+        android:id="@+id/route_edit"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="2"
+        android:text="@string/preview_num"
+        android:textAlignment="center"
+        android:textStyle="normal|bold" />
+
+    <Button
+        android:id="@+id/minus_button"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="@dimen/min_interactive_dim"
+        android:layout_height="@dimen/min_interactive_dim"
+        android:layout_gravity="center"
+        android:text="@string/minus" />
+
+    <Button
+        android:id="@+id/plus_button"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="@dimen/min_interactive_dim"
+        android:layout_height="@dimen/min_interactive_dim"
+        android:layout_gravity="center"
+        android:text="@string/plus" />
+</LinearLayout>
