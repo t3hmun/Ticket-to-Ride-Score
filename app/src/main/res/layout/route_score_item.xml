@@ -2,10 +2,9 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-
     tools:showIn="@layout/route_score_item_preview">
 
     <LinearLayout
@@ -30,7 +29,6 @@
             android:text="@string/times"
             android:textAlignment="center" />
 
-
         <ImageView
             android:layout_width="72dp"
             android:layout_height="wrap_content"
@@ -52,7 +50,11 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:paddingRight="4dp"
+        android:paddingLeft="4dp"
+        android:background="@drawable/border"
+        android:id="@+id/num_stepper_pane">
 
         <TextView
             android:id="@+id/route_edit"
@@ -64,16 +66,6 @@
             android:text="@string/preview_num"
             android:textAlignment="center"
             android:textStyle="normal|bold" />
-
-
-        <TextView
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/routes_lower"
-            android:textAlignment="center" />
-
 
         <Button
             android:id="@+id/minus_button"

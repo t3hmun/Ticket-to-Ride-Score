@@ -21,7 +21,7 @@
     <string name="add_route_score">Add route score</string>
     <string name="add_ticket_score">Add ticket score</string>
     <string name="add_remaining_trains">Add Remaining Trains</string>
-    <string name="routes_lower">routes</string>
+    <string name="routes_lower">routes\u0020</string>
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="preview_num">10</string>

@@ -170,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public Fragment getItem(int position) {
-            return PlayerScoreFragment.newInstance(playerColours.get(position), config);
+            Colours playerColour = playerColours.get(position);
+            return PlayerScoreFragment.newInstance(playerColour, config, colorMapping.get(playerColour));
         }
 
         @Override

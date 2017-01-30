@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 public class PlayerScoreFragment extends Fragment {
 
     private static final String ARG_CONFIG = "config";
+    private static final String ARG_COLOUR_NUM = "colour";
     private static final String ARG_DATA = "data";
     private ConfigData config;
     private View rootView;
@@ -24,6 +25,7 @@ public class PlayerScoreFragment extends Fragment {
     private LinearLayout rootPane;
     private Activity activity;
     private PlayerData data;
+    private int colourNum;
 
     /**
      * Must have no parameters to allow fragment restore to work.
@@ -36,12 +38,13 @@ public class PlayerScoreFragment extends Fragment {
     /**
      * Returns a new instance of this fragment with the relevant data bundled in.
      */
-    public static PlayerScoreFragment newInstance(Colours playerColour, ConfigData config) {
+    public static PlayerScoreFragment newInstance(Colours playerColour, ConfigData config, Integer colourNum) {
         PlayerScoreFragment fragment = new PlayerScoreFragment();
         Bundle args = new Bundle();
         PlayerData data = new PlayerData(playerColour);
         args.putParcelable(ARG_DATA, data);
         args.putParcelable(ARG_CONFIG, config);
+        args.putInt(ARG_COLOUR_NUM, colourNum);
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,7 +71,7 @@ public class PlayerScoreFragment extends Fragment {
             final int cars = routeScores.keyAt(i);
             final int points = routeScores.get(cars);
             final RouteScoreView rsv = new RouteScoreView(getContext());
-            rsv.initNumbers(cars, points);
+            rsv.configure(cars, points, colourNum);
             if (routeData.get(cars, -1) == -1) {
                 routeData.put(cars, 0);
             }
@@ -92,6 +95,7 @@ public class PlayerScoreFragment extends Fragment {
         Bundle args = getArguments();
         config = args.getParcelable(ARG_CONFIG);
         data = args.getParcelable(ARG_DATA);
+        colourNum = args.getInt(ARG_COLOUR_NUM);
     }
 
     @Override
