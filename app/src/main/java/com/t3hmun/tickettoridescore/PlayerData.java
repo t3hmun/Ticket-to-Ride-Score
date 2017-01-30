@@ -32,9 +32,9 @@ class PlayerData implements Parcelable {
     private PlayerData(Parcel in) {
         readSparseIntArray(in, routes);
         readSparseIntArray(in, tickets);
-        remainingTrains = in.readInt();
-        remainingStations = in.readInt();
-        longestRoute = in.readInt() == 1;
+        setRemainingTrains(in.readInt());
+        setRemainingStations(in.readInt());
+        setLongestRoute(in.readInt() == 1);
         playerColour = Colours.values()[in.readInt()];
 
     }
@@ -48,9 +48,9 @@ class PlayerData implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         writeSparseIntArray(dest, routes);
         writeSparseIntArray(dest, tickets);
-        dest.writeInt(remainingTrains);
-        dest.writeInt(remainingStations);
-        dest.writeInt(longestRoute ? 1 : 0);
+        dest.writeInt(getRemainingTrains());
+        dest.writeInt(getRemainingStations());
+        dest.writeInt(isLongestRoute() ? 1 : 0);
         dest.writeInt(playerColour.ordinal());
     }
 
@@ -72,7 +72,31 @@ class PlayerData implements Parcelable {
         }
     }
 
-    public SparseIntArray getRoutes() {
+    SparseIntArray getRoutes() {
         return routes;
+    }
+
+    int getRemainingStations() {
+        return remainingStations;
+    }
+
+    int getRemainingTrains() {
+        return remainingTrains;
+    }
+
+    void setRemainingTrains(int remainingTrains) {
+        this.remainingTrains = remainingTrains;
+    }
+
+    void setRemainingStations(int remainingStations) {
+        this.remainingStations = remainingStations;
+    }
+
+    boolean isLongestRoute() {
+        return longestRoute;
+    }
+
+    void setLongestRoute(boolean longestRoute) {
+        this.longestRoute = longestRoute;
     }
 }

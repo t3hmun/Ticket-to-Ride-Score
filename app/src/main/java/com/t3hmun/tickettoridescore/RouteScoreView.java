@@ -30,7 +30,7 @@ public class RouteScoreView extends LinearLayout {
         View view = inflate(context, R.layout.route_score_item, this);
         carView = (TextView) view.findViewById(R.id.num_of_cars);
         pointsView = (TextView) view.findViewById(R.id.points);
-        quantity = (TextView) view.findViewById(R.id.route_edit);
+        quantity = (TextView) view.findViewById(R.id.quantity);
         Button plus = (Button) view.findViewById(R.id.plus_button);
         Button minus = (Button) view.findViewById(R.id.minus_button);
         int padding = getResources().getDimensionPixelSize(R.dimen.item_padding);

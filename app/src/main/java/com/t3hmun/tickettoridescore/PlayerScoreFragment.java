@@ -8,7 +8,9 @@ import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -19,13 +21,13 @@ public class PlayerScoreFragment extends Fragment {
     private static final String ARG_COLOUR_NUM = "colour";
     private static final String ARG_DATA = "data";
     private ConfigData config;
-    private View rootView;
     private LinearLayout routePane;
     private LinearLayout ticketPane;
-    private LinearLayout rootPane;
     private Activity activity;
     private PlayerData data;
     private int colourNum;
+    private LinearLayout remainingStationsPane;
+    private LinearLayout remainingTrainsPane;
 
     /**
      * Must have no parameters to allow fragment restore to work.
@@ -52,16 +54,84 @@ public class PlayerScoreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        routePane = (LinearLayout) rootView.findViewById(R.id.route_pane);
-        ticketPane = (LinearLayout) rootView.findViewById(R.id.ticket_pane);
-        rootPane = (LinearLayout) rootView.findViewById(R.id.root_pane);
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        LinearLayout rootPane = (LinearLayout) rootView.findViewById(R.id.root_pane);
+        routePane = (LinearLayout) rootPane.findViewById(R.id.route_pane);
+        ticketPane = (LinearLayout) rootPane.findViewById(R.id.ticket_pane);
+        remainingStationsPane = (LinearLayout) rootPane.findViewById(R.id.remaining_stations_pane);
+        remainingTrainsPane = (LinearLayout) rootPane.findViewById(R.id.remaining_trains_pane);
 
         loadArgs();
 
         initRouteViews();
 
+        initRemainingTrains();
+        initRemainingStations();
+
         return rootView;
+    }
+
+    private void initRemainingStations() {
+        // Remaining stations is EURO edition only.
+        if (config.getGameEdition() != GameEdition.EURO) {
+            remainingStationsPane.setVisibility(View.GONE);
+        } else {
+            final String quantity = Integer.toString(data.getRemainingStations());
+            final TextView quantityView = (TextView) remainingStationsPane.findViewById(R.id.quantity);
+            quantityView.setText(quantity);
+            final Button plus = (Button) remainingStationsPane.findViewById(R.id.plus_button);
+            final Button minus = (Button) remainingStationsPane.findViewById(R.id.minus_button);
+
+            plus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int remainingStations = data.getRemainingStations() + 1;
+                    data.setRemainingStations(remainingStations);
+                    String text = Integer.toString(remainingStations);
+                    quantityView.setText(text);
+                }
+            });
+
+            minus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int remainingStations = data.getRemainingStations() - 1;
+                    if (remainingStations < 0) return;
+                    data.setRemainingStations(remainingStations);
+                    String text = Integer.toString(remainingStations);
+                    quantityView.setText(text);
+                }
+            });
+        }
+    }
+
+    private void initRemainingTrains() {
+        final String quantity = Integer.toString(data.getRemainingTrains());
+        final TextView quantityView = (TextView) remainingTrainsPane.findViewById(R.id.quantity);
+        quantityView.setText(quantity);
+        final Button plus = (Button) remainingTrainsPane.findViewById(R.id.plus_button);
+        final Button minus = (Button) remainingTrainsPane.findViewById(R.id.minus_button);
+
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int remainingTrains = data.getRemainingTrains() + 1;
+                data.setRemainingTrains(remainingTrains);
+                String text = Integer.toString(remainingTrains);
+                quantityView.setText(text);
+            }
+        });
+
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int remainingTrains = data.getRemainingTrains() - 1;
+                if (remainingTrains < 0) return;
+                data.setRemainingTrains(remainingTrains);
+                String text = Integer.toString(remainingTrains);
+                quantityView.setText(text);
+            }
+        });
     }
 
     private void initRouteViews() {

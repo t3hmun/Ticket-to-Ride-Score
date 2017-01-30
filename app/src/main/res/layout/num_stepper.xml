@@ -12,7 +12,7 @@
     android:id="@+id/num_stepper_pane">
 
     <TextView
-        android:id="@+id/route_edit"
+        android:id="@+id/quantity"
         style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
