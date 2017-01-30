@@ -72,4 +72,8 @@ class PlayerData implements Parcelable {
             sip.append(pos, val);
         }
     }
+
+    public SparseIntArray getRoutes() {
+        return routes;
+    }
 }

@@ -8,26 +8,22 @@ import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class PlayerScoreFragment extends Fragment {
-    /**
-     * The fragment argument representing the section number for this fragment.
-     */
-    private static final String ARG_COLOUR_ORDINAL = "section_number";
+
     private static final String ARG_CONFIG = "config";
+    private static final String ARG_DATA = "data";
     private ConfigData config;
-    private Colours playerColour;
     private View rootView;
     private LinearLayout routePane;
     private LinearLayout ticketPane;
     private LinearLayout rootPane;
     private Activity activity;
+    private PlayerData data;
 
     /**
      * Must have no parameters to allow fragment restore to work.
@@ -43,7 +39,8 @@ public class PlayerScoreFragment extends Fragment {
     public static PlayerScoreFragment newInstance(Colours playerColour, ConfigData config) {
         PlayerScoreFragment fragment = new PlayerScoreFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLOUR_ORDINAL, playerColour.ordinal());
+        PlayerData data = new PlayerData(playerColour);
+        args.putParcelable(ARG_DATA, data);
         args.putParcelable(ARG_CONFIG, config);
         fragment.setArguments(args);
         return fragment;
@@ -52,33 +49,49 @@ public class PlayerScoreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        this.routePane = (LinearLayout) rootView.findViewById(R.id.route_pane);
-        this.ticketPane = (LinearLayout) rootView.findViewById(R.id.ticket_pane);
-        this.rootPane = (LinearLayout) rootView.findViewById(R.id.root_pane);
+        rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        routePane = (LinearLayout) rootView.findViewById(R.id.route_pane);
+        ticketPane = (LinearLayout) rootView.findViewById(R.id.ticket_pane);
+        rootPane = (LinearLayout) rootView.findViewById(R.id.root_pane);
 
         loadArgs();
 
-        populateRoutes();
+        initRouteViews();
 
         return rootView;
     }
 
-    private void populateRoutes() {
+    private void initRouteViews() {
         SparseIntArray routeScores = config.getRouteScores();
+        final SparseIntArray routeData = data.getRoutes();
         for (int i = 0; i < routeScores.size(); i++) {
-            int cars = routeScores.keyAt(i);
-            int routes = routeScores.get(cars);
-            RouteScoreView rsv = new RouteScoreView(getContext());
-            rsv.initNumbers(cars, routes);
+            final int cars = routeScores.keyAt(i);
+            final int points = routeScores.get(cars);
+            final RouteScoreView rsv = new RouteScoreView(getContext());
+            rsv.initNumbers(cars, points);
+            if(routeData.get(cars, -1) == -1){
+                routeData.put(cars, 0);
+            }
+            rsv.setQuantity(routeData.get(cars));
+
+            rsv.setOnChangeListener(new RouteScoreView.ScoreChangeListener() {
+                @Override
+                public void onChange(boolean increment) {
+                    int val = routeData.get(cars) + (increment ? 1 : -1);
+                    if(val < 0) val = 0;
+                    routeData.put(cars, val);
+                    rsv.setQuantity(routeData.get(cars));
+                }
+            });
+
             routePane.addView(rsv);
         }
     }
 
     private void loadArgs() {
         Bundle args = getArguments();
-        this.playerColour = Colours.values()[args.getInt(ARG_COLOUR_ORDINAL)];
-        this.config = args.getParcelable(ARG_CONFIG);
+        config = args.getParcelable(ARG_CONFIG);
+        data = args.getParcelable(ARG_DATA);
     }
 
     @Override
@@ -86,7 +99,15 @@ public class PlayerScoreFragment extends Fragment {
         super.onAttach(context);
 
         if (!(context instanceof Activity)) return;
-        this.activity = (Activity) context;
+        activity = (Activity) context;
+    }
+
+    @Override
+    public void onPause() {
+        // Update data in args.
+        // Config does not change so that is not updated.
+        getArguments().putParcelable(ARG_DATA, data);
+        super.onPause();
     }
 }
 
