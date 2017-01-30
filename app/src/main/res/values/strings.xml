@@ -28,4 +28,6 @@
     <string name="points_preview">(4 points)</string>
     <string name="times">\u0020x\u0020</string>
     <string name="cars_num_preview">3</string>
+    <string name="remaining_stations">Remaining stations:</string>
+    <string name="remaining_carriages">Remaining carriages:</string>
 </resources>
