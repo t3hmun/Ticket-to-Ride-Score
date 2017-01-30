@@ -1,7 +1,6 @@
 package com.t3hmun.tickettoridescore;
 
 import android.content.Context;
-import android.icu.text.NumberFormat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +35,7 @@ public class RouteScoreView extends LinearLayout {
         plus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(listener != null){
+                if (listener != null) {
                     listener.onChange(true);
                 }
             }
@@ -45,7 +44,7 @@ public class RouteScoreView extends LinearLayout {
         minus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(listener != null){
+                if (listener != null) {
                     listener.onChange(false);
                 }
             }
@@ -57,16 +56,16 @@ public class RouteScoreView extends LinearLayout {
         pointsView.setText("(" + points + " points)");
     }
 
-    void setQuantity(int num){
+    void setQuantity(int num) {
         String text = Integer.toString(num);
         quantity.setText(text);
     }
 
-    void setOnChangeListener(ScoreChangeListener listener){
+    void setOnChangeListener(ScoreChangeListener listener) {
         this.listener = listener;
     }
 
-    interface ScoreChangeListener{
+    interface ScoreChangeListener {
         void onChange(boolean increment);
     }
 }

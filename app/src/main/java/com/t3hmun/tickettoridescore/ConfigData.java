@@ -24,7 +24,7 @@ class ConfigData implements Parcelable {
         }
     };
 
-    private HashMap<Colours, Boolean> players = new HashMap<>(10);
+    private final HashMap<Colours, Boolean> players = new HashMap<>(10);
     private GameEdition gameEdition;
 
     private ConfigData(Parcel in) {

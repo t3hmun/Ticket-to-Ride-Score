@@ -69,7 +69,7 @@ public class PlayerScoreFragment extends Fragment {
             final int points = routeScores.get(cars);
             final RouteScoreView rsv = new RouteScoreView(getContext());
             rsv.initNumbers(cars, points);
-            if(routeData.get(cars, -1) == -1){
+            if (routeData.get(cars, -1) == -1) {
                 routeData.put(cars, 0);
             }
             rsv.setQuantity(routeData.get(cars));
@@ -78,7 +78,7 @@ public class PlayerScoreFragment extends Fragment {
                 @Override
                 public void onChange(boolean increment) {
                     int val = routeData.get(cars) + (increment ? 1 : -1);
-                    if(val < 0) val = 0;
+                    if (val < 0) val = 0;
                     routeData.put(cars, val);
                     rsv.setQuantity(routeData.get(cars));
                 }

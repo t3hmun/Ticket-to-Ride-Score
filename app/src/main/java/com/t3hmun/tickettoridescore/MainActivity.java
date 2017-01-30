@@ -152,12 +152,12 @@ public class MainActivity extends AppCompatActivity {
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 
-        private List<Colours> playerColours;
+        private final List<Colours> playerColours;
 
         SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
             // Adding this field makes the code neater.
-            playerColours = MainActivity.this.chosenPlayerColours;
+            playerColours = chosenPlayerColours;
 
         }
 

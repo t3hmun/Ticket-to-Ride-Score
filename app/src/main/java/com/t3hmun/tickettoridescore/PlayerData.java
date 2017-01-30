@@ -7,12 +7,23 @@ import android.util.SparseIntArray;
 
 class PlayerData implements Parcelable {
 
-    private Colours playerColour;
-    private SparseIntArray routes = new SparseIntArray(10);
-    private SparseIntArray tickets = new SparseIntArray(10);
-    private int remainingTrains = 0;
-    private int remainingStations = 0;
-    private boolean longestRoute = false;
+    public static final Creator<PlayerData> CREATOR = new Creator<PlayerData>() {
+        @Override
+        public PlayerData createFromParcel(Parcel in) {
+            return new PlayerData(in);
+        }
+
+        @Override
+        public PlayerData[] newArray(int size) {
+            return new PlayerData[size];
+        }
+    };
+    private final Colours playerColour;
+    private final SparseIntArray routes = new SparseIntArray(10);
+    private final SparseIntArray tickets = new SparseIntArray(10);
+    private int remainingTrains;
+    private int remainingStations;
+    private boolean longestRoute;
 
     PlayerData(Colours playerColour) {
         this.playerColour = playerColour;
@@ -42,18 +53,6 @@ class PlayerData implements Parcelable {
         dest.writeInt(longestRoute ? 1 : 0);
         dest.writeInt(playerColour.ordinal());
     }
-
-    public static final Creator<PlayerData> CREATOR = new Creator<PlayerData>() {
-        @Override
-        public PlayerData createFromParcel(Parcel in) {
-            return new PlayerData(in);
-        }
-
-        @Override
-        public PlayerData[] newArray(int size) {
-            return new PlayerData[size];
-        }
-    };
 
     private void writeSparseIntArray(@NonNull Parcel dest, SparseIntArray sip) {
         int len = sip.size();

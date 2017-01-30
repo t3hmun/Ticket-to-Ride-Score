@@ -61,7 +61,7 @@ public class ConfigActivity extends AppCompatActivity {
             entry.getValue().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked) data.setGameEdition(edition);
+                    if (isChecked) data.setGameEdition(edition);
                 }
             });
         }
