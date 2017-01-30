@@ -1,7 +1,6 @@
 package com.t3hmun.tickettoridescore;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -34,7 +33,8 @@ public class RouteScoreView extends LinearLayout {
         quantity = (TextView) view.findViewById(R.id.route_edit);
         Button plus = (Button) view.findViewById(R.id.plus_button);
         Button minus = (Button) view.findViewById(R.id.minus_button);
-        int padding = getPixelDimen(R.dimen.item_padding);
+        int padding = getResources().getDimensionPixelSize(R.dimen.item_padding);
+
 
         view.setPadding(0, padding, 0, padding);
 
@@ -68,7 +68,7 @@ public class RouteScoreView extends LinearLayout {
         carView.setText(String.valueOf(carriages));
         pointsView.setText("(" + points + " points)");
         GradientDrawable border = (GradientDrawable) numStepperPane.getBackground();
-        border.setStroke(getPixelDimen(R.dimen.stepper_border), colourNum);
+        border.setStroke(getResources().getDimensionPixelSize(R.dimen.stepper_border), colourNum);
         numStepperPane.invalidate();
     }
 
@@ -83,10 +83,5 @@ public class RouteScoreView extends LinearLayout {
 
     interface ScoreChangeListener {
         void onChange(boolean increment);
-    }
-
-    private int getPixelDimen(int resId) {
-        Resources resources = getResources();
-        return (int) (resources.getDimension(resId) / resources.getDisplayMetrics().density);
     }
 }

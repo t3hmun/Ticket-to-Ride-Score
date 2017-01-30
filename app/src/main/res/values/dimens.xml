@@ -5,5 +5,5 @@
     <dimen name="min_interactive_dim">48dp</dimen>
     <dimen name="item_padding">4dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
-    <dimen name="stepper_border">4dp</dimen>
+    <dimen name="stepper_border">2dp</dimen>
 </resources>
