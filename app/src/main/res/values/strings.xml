@@ -30,4 +30,6 @@
     <string name="cars_num_preview">3</string>
     <string name="remaining_stations">Remaining stations:</string>
     <string name="remaining_carriages">Remaining carriages:</string>
+    <string name="points">points</string>
+    <string name="points_ticket">\u0020points ticket</string>
 </resources>

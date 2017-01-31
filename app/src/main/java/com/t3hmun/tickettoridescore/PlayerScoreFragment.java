@@ -28,6 +28,7 @@ public class PlayerScoreFragment extends Fragment {
     private int colourNum;
     private LinearLayout remainingStationsPane;
     private LinearLayout remainingTrainsPane;
+    private LinearLayout rootPane;
 
     /**
      * Must have no parameters to allow fragment restore to work.
@@ -55,7 +56,7 @@ public class PlayerScoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        LinearLayout rootPane = (LinearLayout) rootView.findViewById(R.id.root_pane);
+        rootPane = (LinearLayout) rootView.findViewById(R.id.root_pane);
         routePane = (LinearLayout) rootPane.findViewById(R.id.route_pane);
         ticketPane = (LinearLayout) rootPane.findViewById(R.id.ticket_pane);
         remainingStationsPane = (LinearLayout) rootPane.findViewById(R.id.remaining_stations_pane);
@@ -64,11 +65,17 @@ public class PlayerScoreFragment extends Fragment {
         loadArgs();
 
         initRouteViews();
+        initTicketViews();
+
 
         initRemainingTrains();
         initRemainingStations();
 
         return rootView;
+    }
+
+    private void initTicketViews() {
+
     }
 
     private void initRemainingStations() {
@@ -184,15 +191,6 @@ public class PlayerScoreFragment extends Fragment {
         super.onPause();
     }
 }
-
-
-
-
-
-
-
-
-
 
 
 
