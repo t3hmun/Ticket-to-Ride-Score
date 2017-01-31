@@ -25,12 +25,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements PlayerScoreFragment.PlayerScoreChangeListener {
 
+    public static final String SCORES = "scores";
+    public static final String COLOURS = "colours";
     private Map<Colours, Integer> colorMapping;
     private Map<Colours, TextView> scoreTextViews;
-    private Colours currentPlayer;
+    private Map<Colours, Integer> scores;
     private ConfigData config;
     private List<Colours> chosenPlayerColours;
 
@@ -42,10 +45,51 @@ public class MainActivity extends AppCompatActivity implements PlayerScoreFragme
         Intent intent = getIntent();
         config = intent.getParcelableExtra(ConfigActivity.BUNDLE_CONF);
 
+
         colorMapping = initColourMapping();
         chosenPlayerColours = loadChosenPlayerColours();
+
+        scores = new HashMap<>(10);
+
+        if (savedInstanceState != null) {
+            int[] scoresNums = savedInstanceState.getIntArray(SCORES);
+            int[] colours = savedInstanceState.getIntArray(COLOURS);
+            Colours[] coloursOrdinals = Colours.values();
+
+
+            assert scoresNums != null;
+            for (int i = 0; i < scoresNums.length; i++) {
+                assert colours != null;
+                scores.put(coloursOrdinals[colours[i]], scoresNums[i]);
+            }
+        } else {
+            for (final Colours player : chosenPlayerColours) {
+                scores.put(player, 0);
+            }
+        }
+
         TabLayout tabLayout = initToolbarTabsAndPager();
         scoreTextViews = initCustomTabs(chosenPlayerColours, tabLayout);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Bundle map into 2 arrays.
+        int size = scores.size();
+        int[] scoresNums = new int[size];
+        int[] colours = new int[size];
+        Set<Map.Entry<Colours, Integer>> entries = scores.entrySet();
+        int i = 0;
+        for (Map.Entry<Colours, Integer> entry : entries) {
+            scoresNums[i] = entry.getValue();
+            colours[i] = entry.getKey().ordinal();
+            i++;
+        }
+
+        outState.putIntArray(SCORES, scoresNums);
+        outState.putIntArray(COLOURS, colours);
     }
 
     @NonNull
@@ -64,7 +108,8 @@ public class MainActivity extends AppCompatActivity implements PlayerScoreFragme
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                currentPlayer = (Colours) tab.getTag();
+                //  Has no use at the moment.
+                //currentPlayer = (Colours) tab.getTag();
             }
 
             @Override
@@ -112,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements PlayerScoreFragme
             TextView score = (TextView) view.findViewById(R.id.score);
             Colours tabColour = colours.get(i);
             label.setText(tabColour.toString());
-            score.setText("0");
+            score.setText(String.format(Locale.getDefault(), "%d", scores.get(tabColour)));
             scoreViews.put(tabColour, score);
             view.setBackgroundColor(colorMapping.get(tabColour));
             // This is required to make the custom view fill the tab properly.
@@ -153,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements PlayerScoreFragme
         int score = data.calcuateScore(routeScores);
         TextView scoreText = scoreTextViews.get(data.getPlayerColour());
         String text = String.format(Locale.getDefault(), "%d", score);
+        scores.put(data.getPlayerColour(), score);
         scoreText.setText(text);
     }
 

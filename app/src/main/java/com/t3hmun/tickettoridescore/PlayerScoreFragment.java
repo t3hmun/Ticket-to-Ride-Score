@@ -72,9 +72,6 @@ public class PlayerScoreFragment extends Fragment {
 
         initLongestRoute();
 
-        // This updates the tab scores on rotation changes.
-        scoreChanged();
-
         return rootView;
     }
 
