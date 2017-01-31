@@ -74,6 +74,28 @@ class PlayerData implements Parcelable {
         }
     }
 
+    int calcuateScore(SparseIntArray routeScores) {
+        int total = 0;
+        for (int i = 0; i < routes.size(); i++) {
+            int routeLen = routes.keyAt(i);
+            int quantity = routes.get(routeLen);
+            int points = routeScores.get(routeLen);
+            int score = quantity * points;
+            total += score;
+        }
+
+        for (int i = 0; i < tickets.size(); i++) {
+            int points = tickets.keyAt(i);
+            int quantity = tickets.get(points);
+            int score = points * quantity;
+            total += score;
+        }
+
+        total += remainingTrains;
+        total += remainingStations * 4;
+        return total;
+    }
+
     SparseIntArray getRoutes() {
         return routes;
     }
@@ -104,5 +126,9 @@ class PlayerData implements Parcelable {
 
     void setLongestRoute(boolean longestRoute) {
         this.longestRoute = longestRoute;
+    }
+
+    Colours getPlayerColour() {
+        return playerColour;
     }
 }

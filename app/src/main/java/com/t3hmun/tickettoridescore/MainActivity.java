@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,9 +23,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PlayerScoreFragment.PlayerScoreChangeListener {
 
     private Map<Colours, Integer> colorMapping;
     private Map<Colours, TextView> scoreTextViews;
@@ -143,6 +145,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void ScoreChanged(PlayerData data) {
+        SparseIntArray routeScores = config.getRouteScores();
+        int score = data.calcuateScore(routeScores);
+        TextView scoreText = scoreTextViews.get(data.getPlayerColour());
+        String text = String.format(Locale.getDefault(), "%d", score);
+        scoreText.setText(text);
     }
 
     /**

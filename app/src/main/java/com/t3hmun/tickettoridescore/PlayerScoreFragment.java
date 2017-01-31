@@ -1,6 +1,5 @@
 package com.t3hmun.tickettoridescore;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,13 +24,12 @@ public class PlayerScoreFragment extends Fragment {
     private ConfigData config;
     private LinearLayout routePane;
     private LinearLayout ticketPane;
-    private Activity activity;
     private PlayerData data;
     private int colourNum;
     private LinearLayout remainingStationsPane;
     private LinearLayout remainingTrainsPane;
-    private LinearLayout rootPane;
     private LayoutInflater inflater;
+    private PlayerScoreChangeListener scoreChangeListener;
 
     /**
      * Must have no parameters to allow fragment restore to work.
@@ -60,7 +58,7 @@ public class PlayerScoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         this.inflater = inflater;
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        rootPane = (LinearLayout) rootView.findViewById(R.id.root_pane);
+        LinearLayout rootPane = (LinearLayout) rootView.findViewById(R.id.root_pane);
         routePane = (LinearLayout) rootPane.findViewById(R.id.route_pane);
         ticketPane = (LinearLayout) rootPane.findViewById(R.id.ticket_pane);
         remainingStationsPane = (LinearLayout) rootPane.findViewById(R.id.remaining_stations_pane);
@@ -74,6 +72,8 @@ public class PlayerScoreFragment extends Fragment {
 
         initRemainingTrains();
         initRemainingStations();
+
+        scoreChanged();
 
         return rootView;
     }
@@ -102,6 +102,7 @@ public class PlayerScoreFragment extends Fragment {
                     int quantity = tickets.get(points) + 1;
                     tickets.put(points, quantity);
                     quantityText.setText(String.format(locale, "%d", quantity));
+                    scoreChanged();
                 }
             });
 
@@ -112,6 +113,7 @@ public class PlayerScoreFragment extends Fragment {
                     int quantity = tickets.get(points) - 1;
                     tickets.put(points, quantity);
                     quantityText.setText(String.format(locale, "%d", quantity));
+                    scoreChanged();
                 }
             });
         }
@@ -135,6 +137,7 @@ public class PlayerScoreFragment extends Fragment {
                     data.setRemainingStations(remainingStations);
                     String text = Integer.toString(remainingStations);
                     quantityView.setText(text);
+                    scoreChanged();
                 }
             });
 
@@ -146,6 +149,7 @@ public class PlayerScoreFragment extends Fragment {
                     data.setRemainingStations(remainingStations);
                     String text = Integer.toString(remainingStations);
                     quantityView.setText(text);
+                    scoreChanged();
                 }
             });
         }
@@ -165,6 +169,7 @@ public class PlayerScoreFragment extends Fragment {
                 data.setRemainingTrains(remainingTrains);
                 String text = Integer.toString(remainingTrains);
                 quantityView.setText(text);
+                scoreChanged();
             }
         });
 
@@ -176,6 +181,7 @@ public class PlayerScoreFragment extends Fragment {
                 data.setRemainingTrains(remainingTrains);
                 String text = Integer.toString(remainingTrains);
                 quantityView.setText(text);
+                scoreChanged();
             }
         });
     }
@@ -200,6 +206,7 @@ public class PlayerScoreFragment extends Fragment {
                     if (val < 0) val = 0;
                     routeData.put(cars, val);
                     rsv.setQuantity(routeData.get(cars));
+                    scoreChanged();
                 }
             });
 
@@ -217,9 +224,9 @@ public class PlayerScoreFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        if (!(context instanceof Activity)) return;
-        activity = (Activity) context;
+        if (context instanceof PlayerScoreChangeListener) {
+            scoreChangeListener = (PlayerScoreChangeListener) context;
+        }
     }
 
     @Override
@@ -228,6 +235,20 @@ public class PlayerScoreFragment extends Fragment {
         // Config does not change so that is not updated.
         getArguments().putParcelable(ARG_DATA, data);
         super.onPause();
+    }
+
+
+    /**
+     * A mildly inefficient but simple way of allowing the activity to update scores.
+     */
+    private void scoreChanged() {
+        if (scoreChangeListener != null) {
+            scoreChangeListener.ScoreChanged(data);
+        }
+    }
+
+    public interface PlayerScoreChangeListener {
+        void ScoreChanged(PlayerData data);
     }
 }
 
