@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -29,6 +31,7 @@ public class PlayerScoreFragment extends Fragment {
     private LinearLayout remainingStationsPane;
     private LinearLayout remainingTrainsPane;
     private LinearLayout rootPane;
+    private LayoutInflater inflater;
 
     /**
      * Must have no parameters to allow fragment restore to work.
@@ -55,6 +58,7 @@ public class PlayerScoreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.inflater = inflater;
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         rootPane = (LinearLayout) rootView.findViewById(R.id.root_pane);
         routePane = (LinearLayout) rootPane.findViewById(R.id.route_pane);
@@ -75,7 +79,42 @@ public class PlayerScoreFragment extends Fragment {
     }
 
     private void initTicketViews() {
+        int[] possibleTickets = config.getPossibleTickets();
+        final SparseIntArray tickets = data.getTickets();
+        final Locale locale = Locale.getDefault();
 
+        for (final int points : possibleTickets) {
+            View ticketView = inflater.inflate(R.layout.ticket_score_item, ticketPane, false);
+            TextView numText = (TextView) ticketView.findViewById(R.id.points_number);
+            final TextView quantityText = (TextView) ticketView.findViewById(R.id.quantity);
+            int id = R.id.plus_button;
+            Button plusButton = (Button) ticketView.findViewById(id);
+            Button minusButton = (Button) ticketView.findViewById(R.id.minus_button);
+
+            ticketPane.addView(ticketView);
+
+            numText.setText(String.format(locale, "%d", points));
+            quantityText.setText(String.format(locale, "%d", tickets.get(points)));
+
+            plusButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int quantity = tickets.get(points) + 1;
+                    tickets.put(points, quantity);
+                    quantityText.setText(String.format(locale, "%d", quantity));
+                }
+            });
+
+            minusButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Negative values are allowed for tickets (failed tickets).
+                    int quantity = tickets.get(points) - 1;
+                    tickets.put(points, quantity);
+                    quantityText.setText(String.format(locale, "%d", quantity));
+                }
+            });
+        }
     }
 
     private void initRemainingStations() {

@@ -104,4 +104,24 @@ class ConfigData implements Parcelable {
 
         return map;
     }
+
+
+    /**
+     * Gets the possible ticket point scores for the edition of the game.
+     *
+     * @return An array of possible point scores.
+     */
+    int[] getPossibleTickets() {
+        int[] tickets;
+        switch (gameEdition) {
+            default:
+            case USA:
+                tickets = new int[]{4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 17, 20, 21};
+                break;
+            case EURO:
+                tickets = new int[]{5, 6, 7, 8, 9, 10, 11, 12, 13, 20, 21};
+        }
+
+        return tickets;
+    }
 }

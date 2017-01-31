@@ -18,6 +18,8 @@ class PlayerData implements Parcelable {
             return new PlayerData[size];
         }
     };
+
+    // These must be final because listeners capture these vars.
     private final Colours playerColour;
     private final SparseIntArray routes = new SparseIntArray(10);
     private final SparseIntArray tickets = new SparseIntArray(10);
@@ -74,6 +76,10 @@ class PlayerData implements Parcelable {
 
     SparseIntArray getRoutes() {
         return routes;
+    }
+
+    SparseIntArray getTickets() {
+        return tickets;
     }
 
     int getRemainingStations() {
