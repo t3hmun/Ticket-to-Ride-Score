@@ -49,75 +49,91 @@
 
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/activity_vertical_margin">
+            android:layout_gravity="center">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-                <TextView
-                    style="@style/Base.TextAppearance.AppCompat.Large"
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:text="@string/end_game" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1.2" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/remaining_trains_pane"
-                android:layout_width="match_parent"
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Large"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingBottom="@dimen/item_padding">
+                android:layout_weight="1"
+                android:text="@string/end_game" />
 
-                <TextView
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:text="@string/remaining_carriages" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1.2" />
 
-                <include layout="@layout/num_stepper" />
+        </LinearLayout>
 
-            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/remaining_trains_pane"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="@dimen/item_padding">
 
-            <LinearLayout
-                android:id="@+id/remaining_stations_pane"
-                android:layout_width="match_parent"
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingBottom="@dimen/item_padding">
+                android:layout_weight="1"
+                android:text="@string/remaining_carriages" />
 
-                <TextView
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:text="@string/remaining_stations" />
+            <include layout="@layout/num_stepper" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/remaining_stations_pane"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="@dimen/item_padding">
+
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/remaining_stations" />
 
 
-                <include layout="@layout/num_stepper" />
+            <include layout="@layout/num_stepper" />
 
-            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/longest_route_pane"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="@dimen/item_padding">
+
+
+            <android.support.v7.widget.AppCompatCheckBox
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="0px"
+                android:layout_height="@dimen/min_interactive_dim"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+                android:gravity="center_vertical"
+                android:text="@string/has_longest_route"
+                android:id="@+id/longest_route_check" />
 
 
         </LinearLayout>
 
 
     </LinearLayout>
+
+
 </ScrollView>

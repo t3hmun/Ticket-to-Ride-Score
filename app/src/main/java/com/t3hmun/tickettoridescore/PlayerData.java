@@ -93,6 +93,7 @@ class PlayerData implements Parcelable {
 
         total += remainingTrains;
         total += remainingStations * 4;
+        if(isLongestRoute()) total += 10;
         return total;
     }
 

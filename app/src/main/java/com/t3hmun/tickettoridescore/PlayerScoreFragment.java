@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,14 +24,11 @@ public class PlayerScoreFragment extends Fragment {
     private static final String ARG_COLOUR_NUM = "colour";
     private static final String ARG_DATA = "data";
     private ConfigData config;
-    private LinearLayout routePane;
-    private LinearLayout ticketPane;
     private PlayerData data;
     private int colourNum;
-    private LinearLayout remainingStationsPane;
-    private LinearLayout remainingTrainsPane;
     private LayoutInflater inflater;
     private PlayerScoreChangeListener scoreChangeListener;
+    private LinearLayout rootPane;
 
     /**
      * Must have no parameters to allow fragment restore to work.
@@ -58,13 +57,11 @@ public class PlayerScoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         this.inflater = inflater;
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        LinearLayout rootPane = (LinearLayout) rootView.findViewById(R.id.root_pane);
-        routePane = (LinearLayout) rootPane.findViewById(R.id.route_pane);
-        ticketPane = (LinearLayout) rootPane.findViewById(R.id.ticket_pane);
-        remainingStationsPane = (LinearLayout) rootPane.findViewById(R.id.remaining_stations_pane);
-        remainingTrainsPane = (LinearLayout) rootPane.findViewById(R.id.remaining_trains_pane);
+        rootPane = (LinearLayout) rootView.findViewById(R.id.root_pane);
 
         loadArgs();
+
+        // The init methods generate the UI parts according to game edition and restore state.
 
         initRouteViews();
         initTicketViews();
@@ -73,12 +70,29 @@ public class PlayerScoreFragment extends Fragment {
         initRemainingTrains();
         initRemainingStations();
 
+        initLongestRoute();
+
+        // This updates the tab scores on rotation changes.
         scoreChanged();
 
         return rootView;
     }
 
+    private void initLongestRoute() {
+        CheckBox lrCheck = (CheckBox) rootPane.findViewById(R.id.longest_route_check);
+        lrCheck.setChecked(data.isLongestRoute());
+        lrCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                data.setLongestRoute(isChecked);
+                scoreChanged();
+            }
+        });
+    }
+
     private void initTicketViews() {
+        final LinearLayout ticketPane = (LinearLayout) rootPane.findViewById(R.id.ticket_pane);
+
         int[] possibleTickets = config.getPossibleTickets();
         final SparseIntArray tickets = data.getTickets();
         final Locale locale = Locale.getDefault();
@@ -120,6 +134,7 @@ public class PlayerScoreFragment extends Fragment {
     }
 
     private void initRemainingStations() {
+        LinearLayout remainingStationsPane = (LinearLayout) rootPane.findViewById(R.id.remaining_stations_pane);
         // Remaining stations is EURO edition only.
         if (config.getGameEdition() != GameEdition.EURO) {
             remainingStationsPane.setVisibility(View.GONE);
@@ -156,6 +171,7 @@ public class PlayerScoreFragment extends Fragment {
     }
 
     private void initRemainingTrains() {
+        LinearLayout remainingTrainsPane = (LinearLayout) rootPane.findViewById(R.id.remaining_trains_pane);
         final String quantity = Integer.toString(data.getRemainingTrains());
         final TextView quantityView = (TextView) remainingTrainsPane.findViewById(R.id.quantity);
         quantityView.setText(quantity);
@@ -187,6 +203,7 @@ public class PlayerScoreFragment extends Fragment {
     }
 
     private void initRouteViews() {
+        LinearLayout routePane = (LinearLayout) rootPane.findViewById(R.id.route_pane);
         SparseIntArray routeScores = config.getRouteScores();
         final SparseIntArray routeData = data.getRoutes();
         for (int i = 0; i < routeScores.size(); i++) {
