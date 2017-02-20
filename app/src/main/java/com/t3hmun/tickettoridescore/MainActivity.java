@@ -1,6 +1,7 @@
 package com.t3hmun.tickettoridescore;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseIntArray;
@@ -90,6 +92,22 @@ public class MainActivity extends AppCompatActivity implements PlayerScoreFragme
 
         outState.putIntArray(SCORES, scoresNums);
         outState.putIntArray(COLOURS, colours);
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Abandon Game?")
+                .setMessage("Do you want to abandon this game?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     @NonNull
