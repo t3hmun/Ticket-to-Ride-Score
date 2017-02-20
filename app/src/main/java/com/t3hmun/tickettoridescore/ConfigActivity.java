@@ -1,5 +1,6 @@
 package com.t3hmun.tickettoridescore;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +9,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.util.HashMap;
+
+import static android.R.attr.x;
 
 public class ConfigActivity extends AppCompatActivity {
 
@@ -28,7 +32,7 @@ public class ConfigActivity extends AppCompatActivity {
         // It should never be stacked on top of the main activity.
         // This can happen after launching from different launchers.
         // This is a fix for that situation.
-        if(!isTaskRoot()) {
+        if (!isTaskRoot()) {
             finish();
             return;
         }
@@ -88,10 +92,24 @@ public class ConfigActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // `this` is currently an OnClickListener object. The wonders of Java.
-                Intent intent = new Intent(ConfigActivity.this, MainActivity.class);
-                intent.putExtra(BUNDLE_CONF, data);
-                startActivity(intent);
+                HashMap<Colours, Boolean> players = data.getPlayers();
+                boolean playerChosen = false;
+                for (final boolean val : players.values()) {
+                    if (val) playerChosen = true;
+                }
+                if (!playerChosen) {
+                    Context context = getApplicationContext();
+                    CharSequence text = "You must add some players first.";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                } else {
+                    // `this` is currently an OnClickListener object. The wonders of Java.
+                    Intent intent = new Intent(ConfigActivity.this, MainActivity.class);
+                    intent.putExtra(BUNDLE_CONF, data);
+                    startActivity(intent);
+                }
             }
         });
 
