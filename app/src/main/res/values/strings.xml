@@ -33,4 +33,5 @@
     <string name="points">points</string>
     <string name="points_ticket">\u0020points ticket</string>
     <string name="has_longest_route">Has longest route?</string>
+    <string name="abandon_game">Abandon game</string>
 </resources>

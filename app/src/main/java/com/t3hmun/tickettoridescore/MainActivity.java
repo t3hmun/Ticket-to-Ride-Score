@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements PlayerScoreFragme
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
