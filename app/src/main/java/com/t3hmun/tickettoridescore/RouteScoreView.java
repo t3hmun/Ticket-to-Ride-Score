@@ -62,7 +62,7 @@ public class RouteScoreView extends LinearLayout {
     /**
      * @param carriages The length of the train represented by this route.
      * @param points    The number of points awarded by this route.
-     * @param colourNum The number of the colour of this player.
+     * @param colourNum The actual colour of this player.
      */
     void configure(int carriages, int points, int colourNum) {
         carView.setText(String.valueOf(carriages));

@@ -1,6 +1,7 @@
 package com.t3hmun.tickettoridescore;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.SparseIntArray;
@@ -136,6 +137,12 @@ public class PlayerScoreFragment extends Fragment {
         if (config.getGameEdition() != GameEdition.EURO) {
             remainingStationsPane.setVisibility(View.GONE);
         } else {
+            // Set the border colour.
+            final LinearLayout numStepperPane = (LinearLayout) remainingStationsPane.findViewById(R.id.num_stepper_pane);
+            GradientDrawable border = (GradientDrawable) numStepperPane.getBackground();
+            border.setStroke(getResources().getDimensionPixelSize(R.dimen.stepper_border), colourNum);
+            numStepperPane.invalidate();
+
             final String quantity = Integer.toString(data.getRemainingStations());
             final TextView quantityView = (TextView) remainingStationsPane.findViewById(R.id.quantity);
             quantityView.setText(quantity);
@@ -169,6 +176,13 @@ public class PlayerScoreFragment extends Fragment {
 
     private void initRemainingTrains() {
         LinearLayout remainingTrainsPane = (LinearLayout) rootPane.findViewById(R.id.remaining_trains_pane);
+
+        // Set the border colour.
+        final LinearLayout numStepperPane = (LinearLayout) remainingTrainsPane.findViewById(R.id.num_stepper_pane);
+        GradientDrawable border = (GradientDrawable) numStepperPane.getBackground();
+        border.setStroke(getResources().getDimensionPixelSize(R.dimen.stepper_border), colourNum);
+        numStepperPane.invalidate();
+
         final String quantity = Integer.toString(data.getRemainingTrains());
         final TextView quantityView = (TextView) remainingTrainsPane.findViewById(R.id.quantity);
         quantityView.setText(quantity);

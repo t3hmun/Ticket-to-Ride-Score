@@ -118,16 +118,16 @@
 
 
             <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/longest_route_check"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_width="0px"
                 android:layout_height="@dimen/min_interactive_dim"
                 android:layout_weight="1"
                 android:button="@null"
-                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                 android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                 android:gravity="center_vertical"
-                android:text="@string/has_longest_route"
-                android:id="@+id/longest_route_check" />
+                android:text="@string/has_longest_route" />
 
 
         </LinearLayout>
