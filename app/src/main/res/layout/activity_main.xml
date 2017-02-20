@@ -35,7 +35,8 @@
             app:tabPaddingBottom="0dp"
             app:tabPaddingEnd="0dp"
             app:tabPaddingStart="0dp"
-            app:tabPaddingTop="0dp" />
+            app:tabPaddingTop="0dp"
+            app:tabIndicatorHeight="3dp"/>
 
     </android.support.design.widget.AppBarLayout>
 
