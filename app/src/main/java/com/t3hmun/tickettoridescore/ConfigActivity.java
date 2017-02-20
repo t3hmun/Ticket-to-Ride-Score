@@ -24,6 +24,15 @@ public class ConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
 
+        // This activity should always be at the root.
+        // It should never be stacked on top of the main activity.
+        // This can happen after launching from different launchers.
+        // This is a fix for that situation.
+        if(!isTaskRoot()) {
+            finish();
+            return;
+        }
+
         RadioButton usaOption = (RadioButton) findViewById(R.id.usaOption);
         RadioButton euroOption = (RadioButton) findViewById(R.id.europeOption);
 
